@@ -1,3 +1,16 @@
+function getData(){
+    url="/getFollowers";
+    twitterId=document.getElementById("Tid").value;
+    //console.log(twitterId);
+    $.post(url,
+        {
+          name: twitterId,
+        },
+        function(data){
+            alert("Data: " + data);
+        });
+    return false;
+}
 function buildGraph(){
     //var w = 1000;
     //var h = 600;
