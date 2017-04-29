@@ -3,17 +3,11 @@ var express = require('express');
 var OAuth2 = require('oauth').OAuth2; 
 var https = require('https');
 var Twitter = require('twitter-node-client').Twitter;
-const util = require('util')
 
 var bodyParser = require('body-parser');
 
 var app = express();
-var error = function (err, response, body) {
-    console.log('ERROR [%s]', JSON.stringify(err));
-};
-var success = function (data) {
-    console.log('Data [%s]', data);
-};
+
 var config = {
     "consumerKey": "FafB4L4DwoIsj79ZCpQblyZgR",
     "consumerSecret": process.env.CONSUMER_SECRET,
@@ -47,7 +41,7 @@ app.use(express.static('public'));
 
 //Callback functions
 var error = function (err, response, body) {
-    console.log('ERROR [%s]', util.inspect(err, false, null));
+    console.log('ERROR [%s]', JSON.stringify(err));
 };
 var success = function (data) {
     console.log('Data [%s]', data);
@@ -55,11 +49,35 @@ var success = function (data) {
 
 var twitter = new Twitter(config);
 
-//var parameters = {
-//
-//}; 
-////Example calls
-//twitter.getFollowersList(parameters, errorCallback, successCallback);
+var parameters = {
+    screen_name: "NoahMoroze",
+}; 
 
+app.post('/getfollowers', function (req, res) {
+    twitter.getFollowersList({ screen_name: req.body.name }, error, function(data) {
+        res.send(JSON.stringify(parse_followers(data)));
+    }); 
+}); 
 
+function parse_followers(data) {
+    var graph_data = {
+        nodes: [],
+        links: []
+    }; 
 
+    data = JSON.parse(data); 
+    var users = data.users; 
+    for(var i=0; i<users.length; i++) {
+        graph_data.nodes.push({
+            name: users[i].name,
+            group: 1,
+            picture: users[i].profile_image_url
+        });
+        graph_data.links.push({
+            source: i+1,
+            target: 0,
+            value: 1
+        }); 
+    }
+    return data; 
+}
