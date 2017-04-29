@@ -1,0 +1,24 @@
+{
+  "name": "fb-visualizer",
+  "version": "1.0.0",
+  "description": "��#\u0000 \u0000f\u0000b\u0000-\u0000v\u0000i\u0000s\u0000u\u0000a\u0000l\u0000i\u0000z\u0000e\u0000r\u0000\r\u0000 \u0000http://bl.ocks.org/jhb/5955887",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nmoroze/fb-visualizer.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nmoroze/fb-visualizer/issues"
+  },
+  "homepage": "https://github.com/nmoroze/fb-visualizer#readme",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
+    "twitter-node-client": "0.0.6"
+  }
+}
