@@ -1,13 +1,14 @@
 function getData(){
     url="/getFollowers";
     twitterId=document.getElementById("Tid").value;
-    //console.log(twitterId);
+    console.log("Getting data");
     $.post(url,
         {
           name: twitterId,
         },
         function(data){
-            alert("Data: " + data);
+            console.log("success");
+            console.log("Data: " + data);
         });
     return false;
 }

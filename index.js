@@ -13,8 +13,9 @@ var config = {
     "consumerSecret": process.env.CONSUMER_SECRET,
     "accessToken": "491620559-BlLTNnN9SAcWJS64epbJMgjUrbKfU1wfxIjGXd5O",
     "accessTokenSecret": process.env.ACCESS_SECRET 
-};
 
+};
+console.log(process.env.CONSUMER_SECRET);
 var port = process.env.PORT || 3000;
 var server = app.listen(port, function () {
     console.log('Server running on port ' + port);
