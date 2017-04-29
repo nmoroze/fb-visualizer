@@ -3,6 +3,7 @@ var express = require('express');
 var OAuth2 = require('oauth').OAuth2; 
 var https = require('https');
 var Twitter = require('twitter-node-client').Twitter;
+const util = require('util')
 
 var bodyParser = require('body-parser');
 
@@ -46,7 +47,7 @@ app.use(express.static('public'));
 
 //Callback functions
 var error = function (err, response, body) {
-    console.log('ERROR [%s]', err);
+    console.log('ERROR [%s]', util.inspect(err, false, null));
 };
 var success = function (data) {
     console.log('Data [%s]', data);
