@@ -37,13 +37,39 @@ function buildGraph(){
             .attr("xlink:href", function(d) {return d.picture;})
             .attr("x", -10)
             .attr("y", -10)
-            .attr("width", 16)
-            .attr("height", 16);
+            .attr("width", 50)
+            .attr("height", 50);
 
             node.append("text")
                 .attr("dx", 12)
                 .attr("dy", ".35em")
                 .text(function(d) { return d.name; });
+
+            var setEvents = node.on('click', function(d) {
+              d3.select("h1").html(d.name);
+              d3.select("h2").html(d.name);
+              d3.select("h3").html ("Take me to " + "<a href='" + d.link + "' >"  + d.name + " web page ⇢"+ "</a>" );
+           });
+
+           /*var refreshGraph = function() {
+             var node = svg.selectAll(".node")
+             .data(json.nodes)
+             .enter().append("g")
+             .attr("class", "node")
+             .call(force.drag);
+
+             node.append("image")
+             .attr("xlink:href", function(d) {return d.picture;})
+             .attr("x", -10)
+             .attr("y", -10)
+             .attr("width", 50)
+             .attr("height", 50);
+
+             node.append("text")
+                 .attr("dx", 12)
+                 .attr("dy", ".35em")
+                 .text(function(d) { return d.name; });
+           };*/
 
             force.on("tick", function() {
                     link.attr("x1", function(d) { return d.source.x; })
@@ -54,5 +80,6 @@ function buildGraph(){
                     node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
                     });
     });
+    //refreshGraph();
     return false;
 }
