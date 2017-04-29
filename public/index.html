@@ -7,14 +7,29 @@
   <title>Force Layout with labels on edges</title>
   <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
   <style type="text/css">
-
   </style>
   <script src="graphBuilder.js"></script>
   <link rel="stylesheet" type="text/css" href="visualizer.css">
 </head>
+<body>
+  <form  onsubmit="buildGraph()" method="post">
+    <div align="center" class="" >
+      <h1>Twitter Data Visualizer</h1>
+    </div>
 
-<body onload="buildGraph()">
+    <div align="center" class="">
+      <label class="" style="text-align: right">TwitterID:</label>
+      <div class="">
+        <input id="Tid" required>
+      </div>
+    </div>
+    <br>
 
+    <div align="center" class="row col-md-10 col-md-offset-1">
+      <input type="submit" class="btn btn-primary btn-lg" id="submitButton" value="Submit">
+    </div>
+
+  </form>  
 </body>
 
 </html>

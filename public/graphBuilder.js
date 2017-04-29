@@ -211,4 +211,5 @@ force.on("tick", function(){
                         }
                         });
                 });
+    return false;
 }
