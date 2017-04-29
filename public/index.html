@@ -7,6 +7,15 @@
   <title>Force Layout with labels on edges</title>
   <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
   <style type="text/css">
+  .link {
+    stroke: #ccc;
+  }
+
+  .node text {
+    pointer-events: none;
+    font: 10px sans-serif;
+  }
+
   </style>
   <script src="graphBuilder.js"></script>
   <link rel="stylesheet" type="text/css" href="visualizer.css">
@@ -29,7 +38,7 @@
       <input type="submit" class="btn btn-primary btn-lg" id="submitButton" value="Submit">
     </div>
 
-  </form>  
+  </form>
 </body>
 
 </html>
