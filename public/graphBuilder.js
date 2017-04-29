@@ -10,7 +10,7 @@ function buildGraph(){
 
     var force = d3.layout.force()
         .gravity(0.05)
-        .distance(100)
+        .distance(200)
         .charge(-100)
         .size([width, height]);
 
@@ -35,8 +35,8 @@ function buildGraph(){
 
             node.append("image")
             .attr("xlink:href", function(d) {return d.picture;})
-            .attr("x", -8)
-            .attr("y", -8)
+            .attr("x", -10)
+            .attr("y", -10)
             .attr("width", 16)
             .attr("height", 16);
 
