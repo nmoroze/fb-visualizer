@@ -10,9 +10,10 @@ function getData(){
             console.log("success");
             console.log("Data: " + data);
         });
+    buildGraph(data);
     return false;
 }
-function buildGraph(){
+function buildGraph(data){
     //var w = 1000;
     //var h = 600;
     var width = window.innerWidth;
@@ -28,7 +29,7 @@ function buildGraph(){
         .charge(-100)
         .size([width, height]);
 
-    d3.json("graph.json", function(error, json) {
+    d3.json(data, function(error, json) {
             if (error) throw error;
 
             force
