@@ -54,5 +54,5 @@ function buildGraph(){
                     node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
                     });
     });
+    return false;
 }
-
