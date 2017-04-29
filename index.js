@@ -3,6 +3,7 @@ var express = require('express');
 var OAuth2 = require('oauth').OAuth2; 
 var https = require('https');
 var Twitter = require('twitter-node-client').Twitter;
+require('dotenv').load();
 
 var bodyParser = require('body-parser');
 
