@@ -80,5 +80,5 @@ function parse_followers(data) {
             value: 1
         }); 
     }
-    return data; 
+    return graph_data; 
 }
