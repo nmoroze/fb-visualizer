@@ -56,27 +56,43 @@ var parameters = {
 }; 
 
 app.post('/getfollowers', function (req, res) {
-    twitter.getFollowersList({ screen_name: req.body.name }, error, function(data) {
-        res.send(JSON.stringify(parse_followers(data)));
+    var params = {
+        screen_name: req.body.name
+    }; 
+
+    twitter.getUser(params, error, function(user_data) {
+        twitter.getFollowersList(params, error, function(follower_data) {
+            res.send(JSON.stringify(parse_followers(user_data, follower_data)));
+        }); 
     }); 
 }); 
 
-function parse_followers(data) {
+function parse_followers(user_data, follower_data) {
     var graph_data = {
         nodes: [],
         links: []
     }; 
 
-    data = JSON.parse(data); 
-    var users = data.users; 
+    user_data = JSON.parse(user_data); 
+    follower_data = JSON.parse(follower_data); 
+
+    graph_data.nodes.push({
+        name: user_data.name,
+        screen_name: user_data.screen_name,
+        group: 1,
+        picture: user_data.profile_image_url
+    }); 
+
+    var users = follower_data.users; 
     for(var i=0; i<users.length; i++) {
         graph_data.nodes.push({
             name: users[i].name,
+            screen_name: users[i].screen_name,
             group: 1,
             picture: users[i].profile_image_url
         });
         graph_data.links.push({
-            source: i,
+            source: i+1,
             target: 0,
             value: 1
         }); 
