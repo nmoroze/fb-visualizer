@@ -75,7 +75,7 @@ function parse_followers(data) {
             picture: users[i].profile_image_url
         });
         graph_data.links.push({
-            source: i+1,
+            source: i,
             target: 0,
             value: 1
         }); 
