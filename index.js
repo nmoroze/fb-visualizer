@@ -3,6 +3,8 @@ var express = require('express');
 var OAuth2 = require('oauth').OAuth2; 
 var https = require('https');
 var Twitter = require('twitter-node-client').Twitter;
+var GithubAPI = require('github'); 
+
 require('dotenv').load();
 
 var bodyParser = require('body-parser');
@@ -31,6 +33,14 @@ oauth2.getOAuthAccessToken('', {
         token = access_token;
         });
 
+var github = new GithubAPI(); 
+github.authenticate({
+    type: "oauth",
+    token: process.env.GITHUB_TOKEN 
+});
+
+
+
 //APP CONFIG
 app.use( bodyParser.json() );       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
@@ -56,16 +66,26 @@ var parameters = {
 }; 
 
 app.post('/getfollowers', function (req, res) {
-    var params = {
-        screen_name: req.body.name
-    }; 
-
-    twitter.getUser(params, error, function(user_data) {
-        twitter.getFollowersList(params, error, function(follower_data) {
+    var params = { username: req.body.name }; 
+    github.users.getFollowingForUser(params, function(err, follower_data) {
+        github.users.getForUser(params, function(err, user_data) {
+            console.log(user_data);
             res.send(JSON.stringify(parse_followers(user_data, follower_data)));
-        }); 
-    }); 
+        });
+    });
 }); 
+
+//app.post('/getfollowers', function (req, res) {
+//    var params = {
+//        screen_name: req.body.name
+//    }; 
+//
+//    twitter.getUser(params, error, function(user_data) {
+//        twitter.getFollowersList(params, error, function(follower_data) {
+//            res.send(JSON.stringify(parse_followers(user_data, follower_data)));
+//        }); 
+//    }); 
+//}); 
 
 function parse_followers(user_data, follower_data) {
     var graph_data = {
@@ -73,23 +93,23 @@ function parse_followers(user_data, follower_data) {
         links: []
     }; 
 
-    user_data = JSON.parse(user_data); 
-    follower_data = JSON.parse(follower_data); 
-
+    //user_data = JSON.parse(user_data); 
+    //follower_data = JSON.parse(follower_data); 
+    user_data = user_data.data;
     graph_data.nodes.push({
-        name: user_data.name,
-        screen_name: user_data.screen_name,
+        name: user_data.login,
+        screen_name: user_data.login,
         group: 1,
-        picture: user_data.profile_image_url
+        picture: user_data.avatar_url
     }); 
 
-    var users = follower_data.users; 
+    var users = follower_data.data; 
     for(var i=0; i<users.length; i++) {
         graph_data.nodes.push({
-            name: users[i].name,
-            screen_name: users[i].screen_name,
+            name: users[i].login,
+            screen_name: users[i].login,
             group: 1,
-            picture: users[i].profile_image_url
+            picture: users[i].avatar_url
         });
         graph_data.links.push({
             source: i+1,
