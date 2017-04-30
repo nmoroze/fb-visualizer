@@ -1,12 +1,13 @@
 function initializeTheDiGraph(){
-    data=getData(function(data) {
+    data=getData(document.getElementById("Tid").value, function(data) {
         buildGraph(data);
     });
     return false;
 }
-function getData(callback){
+
+function getData(Tid, callback){
     url="/getFollowers";
-    twitterId=document.getElementById("Tid").value;
+    twitterId=Tid;
     console.log("Getting data");
     $.post(url,
         {
@@ -16,9 +17,9 @@ function getData(callback){
             loadData=data;
             console.log("success");
             console.log("Data: " + loadData);
-            callback(data); 
+            callback(data);
         });
-    
+
 }
 function buildGraph(loadData){
     //var w = 1000;
@@ -67,9 +68,11 @@ function buildGraph(loadData){
                 .attr("dy", ".35em")
                 .text(function(d) { return d.name; });
 
-            var setEvents = node.on('click', function(obj) {
-              json.push(obj);
-           });
+            var setEvents = node.on('click', function(d) {
+              json.push(getData(d.screen_name, function(data) {
+                  buildGraph(data);
+              }
+            ));});
 
            /*var refreshGraph = function() {
              svg.selectAll(".node")
