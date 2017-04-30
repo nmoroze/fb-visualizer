@@ -45,14 +45,12 @@ function buildGraph(){
                 .attr("dy", ".35em")
                 .text(function(d) { return d.name; });
 
-            var setEvents = node.on('click', function(d) {
-              d3.select("h1").html(d.name);
-              d3.select("h2").html(d.name);
-              d3.select("h3").html ("Take me to " + "<a href='" + d.link + "' >"  + d.name + " web page ⇢"+ "</a>" );
+            var setEvents = node.on('click', function(obj) {
+              json.push(obj);
            });
 
            /*var refreshGraph = function() {
-             var node = svg.selectAll(".node")
+             svg.selectAll(".node")
              .data(json.nodes)
              .enter().append("g")
              .attr("class", "node")
