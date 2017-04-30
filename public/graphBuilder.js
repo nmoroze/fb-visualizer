@@ -1,8 +1,32 @@
-function buildGraph(){
+function initializeTheDiGraph(){
+    data=getData(function(data) {
+        buildGraph(data);
+    });
+    return false;
+}
+function getData(callback){
+    url="/getFollowers";
+    twitterId=document.getElementById("Tid").value;
+    console.log("Getting data");
+    $.post(url,
+        {
+          name: twitterId,
+        },
+        function(data){
+            loadData=data;
+            console.log("success");
+            console.log("Data: " + loadData);
+            callback(data); 
+        });
+    
+}
+function buildGraph(loadData){
     //var w = 1000;
     //var h = 600;
+    console.log(loadData);
     var width = window.innerWidth;
     var height = window.innerHeight;
+    var imgSize=50;
 
     var svg = d3.select("body").append("svg")
         .attr("width", width)
@@ -14,8 +38,7 @@ function buildGraph(){
         .charge(-100)
         .size([width, height]);
 
-    d3.json("graph.json", function(error, json) {
-            if (error) throw error;
+        json=JSON.parse(loadData);
 
             force
             .nodes(json.nodes)
@@ -37,8 +60,8 @@ function buildGraph(){
             .attr("xlink:href", function(d) {return d.picture;})
             .attr("x", -10)
             .attr("y", -10)
-            .attr("width", 50)
-            .attr("height", 50);
+            .attr("width", imgSize)
+            .attr("height", imgSize);
 
             node.append("text")
                 .attr("dx", 12)
@@ -71,7 +94,11 @@ function buildGraph(){
                  .text(function(d) { return d.name; });
            };*/
 
+
             force.on("tick", function() {
+                 node.attr("cx", function(d) { return d.x = Math.max(imgSize, Math.min(width - imgSize, d.x)); })
+        .attr("cy", function(d) { return d.y = Math.max(imgSize, Math.min(height - imgSize, d.y)); });
+
                     link.attr("x1", function(d) { return d.source.x; })
                     .attr("y1", function(d) { return d.source.y; })
                     .attr("x2", function(d) { return d.target.x; })
@@ -79,7 +106,5 @@ function buildGraph(){
 
                     node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
                     });
-    });
-    //refreshGraph();
-    return false;
+    refreshGraph();
 }
