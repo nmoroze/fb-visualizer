@@ -1,4 +1,10 @@
-function getData(){
+function initializeTheDiGraph(){
+    data=getData(function(data) {
+        buildGraph(data);
+    });
+    return false;
+}
+function getData(callback){
     url="/getFollowers";
     twitterId=document.getElementById("Tid").value;
     console.log("Getting data");
@@ -6,13 +12,13 @@ function getData(){
         {
           name: twitterId,
         },
-        function(loadData){
+        function(data){
+            loadData=data;
             console.log("success");
             console.log("Data: " + loadData);
-            buildGraph(loadData);
+            callback(data); 
         });
     
-    return false;
 }
 function buildGraph(loadData){
     //var w = 1000;
