@@ -69,7 +69,6 @@ function buildGraph(loadData){
                 .text(function(d) { return d.name; });
 
             var setEvents = node.on('click', function(d) {
-              d3.select("h1").html(d.name);
               d3.select("h2").html(d.name);
               d3.select("h3").html ("Take me to " + "<a href='" + d.link + "' >"  + d.name + " web page ⇢"+ "</a>" );
            });
@@ -97,7 +96,7 @@ function buildGraph(loadData){
 
             force.on("tick", function() {
                  node.attr("cx", function(d) { return d.x = Math.max(imgSize, Math.min(width - imgSize, d.x)); })
-        .attr("cy", function(d) { return d.y = Math.max(imgSize, Math.min(height - imgSize, d.y)); });
+                 .attr("cy", function(d) { return d.y = Math.max(imgSize, Math.min(height - imgSize, d.y)); });
 
                     link.attr("x1", function(d) { return d.source.x; })
                     .attr("y1", function(d) { return d.source.y; })
