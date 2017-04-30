@@ -4,6 +4,9 @@ function initializeTheDiGraph(){
     });
     return false;
 }
+function makeToys(){
+    
+}
 
 function getData(Tid, callback){
     url="/getFollowers";
@@ -65,42 +68,66 @@ function buildGraph(loadData){
             .attr("height", imgSize);
 
             node.append("text")
-                .attr("dx", 12)
-                .attr("dy", ".35em")
+                .attr("y",imgSize)
+                .attr("x",7)
+                .attr("text-anchor", "middle")
                 .text(function(d) { return d.name; });
 
+
+
+            var setEvents1 = node.on('click', function(d){
+                var table = document.getElementById("myTable");
+                var row = table.insertRow(0);
+                var cell1 = row.insertCell(0);
+                cell1.innerHTML = d.name;
+               //d3.select("h2").html(d.name); 
+            });
+            
             var setEvents = node.on('dblclick', function(d) {
+              var length = json.nodes.length;
               newData = getData(d.screen_name, function(newData) {
+                //console.log(newData);
+                newData = JSON.parse(newData);
+                //console.log(newData.links);
                 json.nodes.push(newData.nodes);
+                for (var i = 0; i < newData.links.length; i++) {
+                  console.log(newData.links[i].source);
+                  newData.links[i].source += length;
+                  newData.links[i].target += length;
+                }
+                //console.log("here");
+
                 json.links.push(newData.links);
+                //console.log("here");
+                //console.log(newData);
               });
-              console.log(newData);
             });
 
-           var refreshGraph = function() {
-             svg.selectAll(".node")
-             .data(json.nodes)
-             .enter().append("g")
-             .attr("class", "node")
-             .call(force.drag);
+           // var refreshGraph = function() {
 
-             node.append("image")
-             .attr("xlink:href", function(d) {return d.picture;})
-             .attr("x", -10)
-             .attr("y", -10)
-             .attr("width", 50)
-             .attr("height", 50);
+           //   svg.selectAll(".node")
+           //   .data(json.nodes)
+           //   .enter().append("g")
+           //   .attr("class", "node")
+           //   .call(force.drag);
 
-             node.append("text")
-                 .attr("dx", 12)
-                 .attr("dy", ".35em")
-                 .text(function(d) { return d.name; });
-           };
+           //   node.append("image")
+           //   .attr("xlink:href", function(d) {return d.picture;})
+           //   .attr("x", -10)
+           //   .attr("y", -10)
+           //   .attr("width", 50)
+           //   .attr("height", 50);
+
+           //   node.append("text")
+           //       .attr("dx", 12)
+           //       .attr("dy", ".35em")
+           //       .text(function(d) { return d.name; });
+           // };
 
 
             force.on("tick", function() {
                  node.attr("cx", function(d) { return d.x = Math.max(imgSize, Math.min(width - imgSize, d.x)); })
-        .attr("cy", function(d) { return d.y = Math.max(imgSize, Math.min(height - imgSize, d.y)); });
+                 .attr("cy", function(d) { return d.y = Math.max(imgSize, Math.min(height - imgSize, d.y)); });
 
                     link.attr("x1", function(d) { return d.source.x; })
                     .attr("y1", function(d) { return d.source.y; })
