@@ -6,16 +6,18 @@ function getData(){
         {
           name: twitterId,
         },
-        function(data){
+        function(loadData){
             console.log("success");
-            console.log("Data: " + data);
+            console.log("Data: " + loadData);
+            buildGraph(loadData);
         });
-    buildGraph(data);
+    
     return false;
 }
-function buildGraph(data){
+function buildGraph(loadData){
     //var w = 1000;
     //var h = 600;
+    console.log(loadData);
     var width = window.innerWidth;
     var height = window.innerHeight;
 
@@ -29,8 +31,7 @@ function buildGraph(data){
         .charge(-100)
         .size([width, height]);
 
-    d3.json(data, function(error, json) {
-            if (error) throw error;
+        json=JSON.parse(loadData);
 
             force
             .nodes(json.nodes)
@@ -94,7 +95,5 @@ function buildGraph(data){
 
                     node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
                     });
-    });
-    //refreshGraph();
-    return false;
+    refreshGraph();
 }
