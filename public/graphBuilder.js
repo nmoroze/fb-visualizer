@@ -74,6 +74,7 @@ function buildGraph(loadData){
                 json.nodes.push(newData.nodes);
                 json.links.push(newData.links);
               });
+              console.log(newData);
             });
 
            var refreshGraph = function() {
