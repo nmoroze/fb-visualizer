@@ -75,7 +75,7 @@ function buildGraph(loadData){
                   buildGraph(data);
               }
             ));});
-
+            
            /*var refreshGraph = function() {
              svg.selectAll(".node")
              .data(json.nodes)
