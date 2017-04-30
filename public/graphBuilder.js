@@ -70,11 +70,10 @@ function buildGraph(loadData){
                 .text(function(d) { return d.name; });
 
             var setEvents = node.on('dblclick', function(d) {
-              newData = getData(d.screen_name, function(data) {
-                  buildGraph(data);
+              newData = getData(d.screen_name, function(newData) {
+                json.nodes.push(newData.nodes);
+                json.links.push(newData.links);
               });
-              json.nodes.push(newData.nodes);
-              json.links.push(newData.links);
             });
 
            var refreshGraph = function() {
