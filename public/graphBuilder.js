@@ -4,6 +4,9 @@ function initializeTheDiGraph(){
     });
     return false;
 }
+function makeToys(){
+    
+}
 
 function getData(Tid, callback){
     url="/getFollowers";
@@ -65,38 +68,46 @@ function buildGraph(loadData){
             .attr("height", imgSize);
 
             node.append("text")
-                .attr("dx", 12)
-                .attr("dy", ".35em")
+                .attr("y",imgSize)
+                .attr("x",7)
+                .attr("text-anchor", "middle")
                 .text(function(d) { return d.name; });
 
 
-            var setEvents = node.on('dblclick', function(d) {
+            var setEvents1 = node.on('click', function(d){
+                var table = document.getElementById("myTable");
+                var row = table.insertRow(0);
+                var cell1 = row.insertCell(0);
+                cell1.innerHTML = d.name;
+               //d3.select("h2").html(d.name); 
+            });
+            var setEvents = node.on('dblclick', function(d) {                
               newData = getData(d.screen_name, function(newData) {
-                json.nodes.push(newData.nodes);
+                json.nodes. push(newData.nodes);
                 json.links.push(newData.links);
               });
             });
 
-           var refreshGraph = function() {
+           // var refreshGraph = function() {
 
-             svg.selectAll(".node")
-             .data(json.nodes)
-             .enter().append("g")
-             .attr("class", "node")
-             .call(force.drag);
+           //   svg.selectAll(".node")
+           //   .data(json.nodes)
+           //   .enter().append("g")
+           //   .attr("class", "node")
+           //   .call(force.drag);
 
-             node.append("image")
-             .attr("xlink:href", function(d) {return d.picture;})
-             .attr("x", -10)
-             .attr("y", -10)
-             .attr("width", 50)
-             .attr("height", 50);
+           //   node.append("image")
+           //   .attr("xlink:href", function(d) {return d.picture;})
+           //   .attr("x", -10)
+           //   .attr("y", -10)
+           //   .attr("width", 50)
+           //   .attr("height", 50);
 
-             node.append("text")
-                 .attr("dx", 12)
-                 .attr("dy", ".35em")
-                 .text(function(d) { return d.name; });
-           };
+           //   node.append("text")
+           //       .attr("dx", 12)
+           //       .attr("dy", ".35em")
+           //       .text(function(d) { return d.name; });
+           // };
 
 
             force.on("tick", function() {
