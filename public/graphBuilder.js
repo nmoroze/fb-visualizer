@@ -70,11 +70,22 @@ function buildGraph(loadData){
                 .text(function(d) { return d.name; });
 
             var setEvents = node.on('dblclick', function(d) {
+              var length = json.nodes.length;
               newData = getData(d.screen_name, function(newData) {
+                //console.log(newData);
+                newData = JSON.parse(newData);
+                //console.log(newData.links);
                 json.nodes.push(newData.nodes);
+                for (var i = 0; i < newData.links.length; i++) {
+                  console.log(newData.links[i].source);
+                  newData.links[i].source += length;
+                  newData.links[i].target += length;
+                }
+                //console.log("here");
                 json.links.push(newData.links);
+                //console.log("here");
+                //console.log(newData);
               });
-              console.log(newData);
             });
 
            var refreshGraph = function() {
