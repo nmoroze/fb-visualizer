@@ -3,6 +3,7 @@ var express = require('express');
 var OAuth2 = require('oauth').OAuth2; 
 var https = require('https');
 var Twitter = require('twitter-node-client').Twitter;
+require('dotenv').load();
 
 var bodyParser = require('body-parser');
 
@@ -13,8 +14,9 @@ var config = {
     "consumerSecret": process.env.CONSUMER_SECRET,
     "accessToken": "491620559-BlLTNnN9SAcWJS64epbJMgjUrbKfU1wfxIjGXd5O",
     "accessTokenSecret": process.env.ACCESS_SECRET 
-};
 
+};
+console.log(process.env.CONSUMER_SECRET);
 var port = process.env.PORT || 3000;
 var server = app.listen(port, function () {
     console.log('Server running on port ' + port);
@@ -74,10 +76,10 @@ function parse_followers(data) {
             picture: users[i].profile_image_url
         });
         graph_data.links.push({
-            source: i+1,
+            source: i,
             target: 0,
             value: 1
         }); 
     }
-    return data; 
+    return graph_data; 
 }

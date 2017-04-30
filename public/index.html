@@ -6,41 +6,31 @@
   <meta charset="utf-8">
   <title>Force Layout with labels on edges</title>
   <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+      <link rel="stylesheet"
+	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	
   <style type="text/css">
-  .link {
-    stroke: #000000;
-  }
-
-  .node text {
-    pointer-events: none;
-    font: 10px sans-serif;
-  }
-
   </style>
   <script src="graphBuilder.js"></script>
   <link rel="stylesheet" type="text/css" href="visualizer.css">
 </head>
 <body>
-  <header>
-  <h1>Twitter Followers</h1>
-  <h2>Click to view their page</h2>
-  <h3>And link to their web page!</h3>
-  </header>
-  <form  onsubmit="return false;" method="post">
-    <div align="center" class="" >
+  <form  onsubmit="return initializeTheDiGraph();" method="post">
+    <div class="col-sm-offset-4" >
       <h1>Twitter Data Visualizer</h1>
     </div>
-
-    <div align="center" class="">
-      <label class="" style="text-align: right">TwitterID:</label>
-      <div class="">
+    <div class="" style="margin-bottom: 20px; background-color : transparent;">
+      <label class="col-sm-1 col-sm-offset-4" style="text-align: right">Twitter ID:</label>
+      <div class="col-sm-5">
         <input id="Tid" required>
       </div>
     </div>
     <br>
 
-    <div align="center" class="row col-md-10 col-md-offset-1">
-      <input type="submit" class="btn btn-primary btn-lg" id="submitButton" value="Submit" onclick="buildGraph()">
+    <div class="row col-md-10 col-md-offset-5">
+      <input type="submit" class="btn btn-primary btn-lg" id="submitButton" value="Submit">
     </div>
 
   </form>

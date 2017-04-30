@@ -1,6 +1,29 @@
-function buildGraph(){
+function initializeTheDiGraph(){
+    data=getData(function(data) {
+        buildGraph(data);
+    });
+    return false;
+}
+function getData(callback){
+    url="/getFollowers";
+    twitterId=document.getElementById("Tid").value;
+    console.log("Getting data");
+    $.post(url,
+        {
+          name: twitterId,
+        },
+        function(data){
+            loadData=data;
+            console.log("success");
+            console.log("Data: " + loadData);
+            callback(data); 
+        });
+    
+}
+function buildGraph(loadData){
     //var w = 1000;
     //var h = 600;
+    console.log(loadData);
     var width = window.innerWidth;
     var height = window.innerHeight;
 
@@ -14,8 +37,7 @@ function buildGraph(){
         .charge(-100)
         .size([width, height]);
 
-    d3.json("graph.json", function(error, json) {
-            if (error) throw error;
+        json=JSON.parse(loadData);
 
             force
             .nodes(json.nodes)
@@ -77,7 +99,5 @@ function buildGraph(){
 
                     node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
                     });
-    });
-    //refreshGraph();
-    return false;
+    refreshGraph();
 }
