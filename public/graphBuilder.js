@@ -126,8 +126,8 @@ function buildGraph(loadData){
 
 
             force.on("tick", function() {
-                 node.attr("cx", function(d) { return d.x = Math.max(imgSize, Math.min(width - imgSize, d.x)); })
-                 .attr("cy", function(d) { return d.y = Math.max(imgSize, Math.min(height - imgSize, d.y)); });
+                 node.attr("cx", function(d) { return d.x = Math.max(0, Math.min(width - imgSize, d.x)); })
+                 .attr("cy", function(d) { return d.y = Math.max(0, Math.min(height - imgSize, d.y)); });
 
                     link.attr("x1", function(d) { return d.source.x; })
                     .attr("y1", function(d) { return d.source.y; })

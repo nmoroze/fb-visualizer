@@ -18,21 +18,16 @@
 </head>
 <body>
   <form  onsubmit="return initializeTheDiGraph();" method="post">
-    <div class="col-sm-offset-4" >
-      <h1>Twitter Data Visualizer</h1>
-    </div>
-    <div class="" style="margin-bottom: 20px; background-color : transparent;">
-      <label class="col-sm-1 col-sm-offset-4" style="text-align: right">Twitter ID:</label>
+  <div class="" style="margin-bottom: 20px; background-color : transparent;">
       <div class="col-sm-5">
+        Enter a Github Username:<br> 
         <input id="Tid" required>
+        <input type="submit" class="btn btn-primary btn-sm" id="submitButton" value="Go">
       </div>
     </div>
     <br>
 
-    <div class="row col-md-10 col-md-offset-5">
-      <input type="submit" class="btn btn-primary btn-lg" id="submitButton" value="Submit">
-    </div>
-    <table style="position:absolute;" id="myTable">
+        <table style="position:absolute;" id="myTable">
 
 	</table>
 
