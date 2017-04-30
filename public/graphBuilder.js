@@ -1,12 +1,13 @@
 function initializeTheDiGraph(){
-    data=getData(function(data) {
+    data=getData(document.getElementById("Tid").value, function(data) {
         buildGraph(data);
     });
     return false;
 }
-function getData(callback){
-    url="/getfollowers";
-    twitterId=document.getElementById("Tid").value;
+
+function getData(Tid, callback){
+    url="/getFollowers";
+    twitterId=Tid;
     console.log("Getting data");
     $.post(url,
         {
@@ -16,9 +17,9 @@ function getData(callback){
             loadData=data;
             console.log("success");
             console.log("Data: " + loadData);
-            callback(data); 
+            callback(data);
         });
-    
+
 }
 function buildGraph(loadData){
     //var w = 1000;
@@ -68,14 +69,16 @@ function buildGraph(loadData){
                 .attr("dy", ".35em")
                 .text(function(d) { return d.name; });
 
-            var setEvents = node.on('click', function(d) {
-              d3.select("h1").html(d.name);
-              d3.select("h2").html(d.name);
-              d3.select("h3").html ("Take me to " + "<a href='" + d.link + "' >"  + d.name + " web page ⇢"+ "</a>" );
-           });
+            var setEvents = node.on('dblclick', function(d) {
+              newData = getData(d.screen_name, function(newData) {
+                json.nodes.push(newData.nodes);
+                json.links.push(newData.links);
+              });
+              console.log(newData);
+            });
 
-           /*var refreshGraph = function() {
-             var node = svg.selectAll(".node")
+           var refreshGraph = function() {
+             svg.selectAll(".node")
              .data(json.nodes)
              .enter().append("g")
              .attr("class", "node")
@@ -92,7 +95,7 @@ function buildGraph(loadData){
                  .attr("dx", 12)
                  .attr("dy", ".35em")
                  .text(function(d) { return d.name; });
-           };*/
+           };
 
 
             force.on("tick", function() {
