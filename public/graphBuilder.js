@@ -69,14 +69,17 @@ function buildGraph(loadData){
                 .attr("dy", ".35em")
                 .text(function(d) { return d.name; });
 
-            var setEvents = node.on('click', function(d) {
 
-              json.push(getData(d.screen_name, function(data) {
+            var setEvents = node.on('dblclick', function(d) {
+              newData = getData(d.screen_name, function(data) {
                   buildGraph(data);
-              }
-            ));});
-            
-           /*var refreshGraph = function() {
+              });
+              json.nodes.push(newData.nodes);
+              json.links.push(newData.links);
+            });
+
+           var refreshGraph = function() {
+
              svg.selectAll(".node")
              .data(json.nodes)
              .enter().append("g")
@@ -94,7 +97,7 @@ function buildGraph(loadData){
                  .attr("dx", 12)
                  .attr("dy", ".35em")
                  .text(function(d) { return d.name; });
-           };*/
+           };
 
 
             force.on("tick", function() {
