@@ -5,7 +5,7 @@ function initializeTheDiGraph(){
     return false;
 }
 function getData(callback){
-    url="/getFollowers";
+    url="/getfollowers";
     twitterId=document.getElementById("Tid").value;
     console.log("Getting data");
     $.post(url,

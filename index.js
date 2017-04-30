@@ -73,7 +73,8 @@ function parse_followers(user_data, follower_data) {
         links: []
     }; 
 
-    data = JSON.parse(data); 
+    user_data = JSON.parse(user_data); 
+    follower_data = JSON.parse(follower_data); 
 
     graph_data.nodes.push({
         name: user_data.name,
@@ -82,7 +83,7 @@ function parse_followers(user_data, follower_data) {
         picture: user_data.profile_image_url
     }); 
 
-    var users = data.users; 
+    var users = follower_data.users; 
     for(var i=0; i<users.length; i++) {
         graph_data.nodes.push({
             name: users[i].name,
@@ -91,7 +92,7 @@ function parse_followers(user_data, follower_data) {
             picture: users[i].profile_image_url
         });
         graph_data.links.push({
-            source: i,
+            source: i+1,
             target: 0,
             value: 1
         }); 
